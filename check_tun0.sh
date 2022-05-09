@@ -1,12 +1,12 @@
-#!/bin/sh
-# filename: tun-up
+#!bin/bash
 
-if [ "$IFACE" = tun0 ]; then
-  echo "tun0 up"
-fi
-if [ "$IFACE" != tun0 ]; then
-  /startup/run.sh &> /startup/feedback.txt &
-  cd /startup/
-  ./firewall-rules.sh &> /startup/firewall-rules.sh &
-  echo "tun0 down"
-fi
+for i in tun0
+  do OUT="$(ip a show $i up)";
+
+    if [[ $OUT == *"does not exist."* ]]; then
+      echo "$i is down"
+    else
+      echo "$i is up"    
+    fi
+
+done
